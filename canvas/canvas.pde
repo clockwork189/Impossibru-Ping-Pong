@@ -13,8 +13,8 @@ var isGameOver = false;
 var promptedName = false;
 var paddleWidth = 20;
 var paddleHeight = 50;
-PFont fontA = loadFont("Courier New");
-		    
+PFont fontA = loadFont("Courier New");    
+		
 void setup() {
     size(pageWidth,pageHeight);
 	textFont(fontA, 14);
@@ -30,76 +30,82 @@ void draw() {
     rect(0, pageHeight-10, pageWidth, 10); 
     rect(pageWidth/2, 0, 10, pageHeight/3); 
     rect(pageWidth/2, pageHeight-pageHeight/3, 10, pageHeight/3); 
-    ellipse(pageWidth/2, pageHeight/2, 170, 170);    
+    ellipse(pageWidth/2 +5, pageHeight/2, 170, 170);    
     
     //Draw Paddle
     rect(20, mouseY, paddleWidth, paddleHeight); 
      
     //Draw Center Circle and write instructions within
     fill(0, 0, 0);
-    ellipse(pageWidth/2, pageHeight/2, 150, 150);        
+    ellipse(pageWidth/2 + 5, pageHeight/2, 150, 150);        
     
     // Control Bounce off walls
     if(ballX == 0) {
 		isGameOver = true;
 		ballMoving = false;
+		ballX = pageWidth/2;
+		ballY = pageHeight/2;
     } else if(ballX == pageWidth - 20) {
-        speedX = -5;
+        speedX = -speedX;
 		
     } else if(ballY == 0) {
         speedY = 5;
     }  else if(ballY == pageHeight -20) {
-        speedY = -5;
+        speedY = -speedY;
     } 
     
     // Control Ball Bounce off Paddle
-    if(ballY > mouseY && ballY < mouseY + 50 && ballX == 40) {
-        speedX = 5;
+    if(ballY > mouseY && ballY < mouseY + paddleHeight && ballX == 40) {
+        speedX = -speedX;
 		score += 1;
     }
        
     // Control Ball Bounce off Enemy Paddle
     if(ballX == cpuPaddleX) {
-        speedX = -5;
+        speedX = -speedX;
     }
     
 	if(isGameOver == true) {
 		fill(0, 255, 0); 
-	    text("Game Over!", pageWidth/2 - 40, pageHeight/2);
-	    text("Score: " + score, pageWidth/2 - 30, pageHeight/2 + 15);
-		if(!promptedName) {
-			var playerName = prompt("Please enter your name","Player X");
-			promptedName = true;
-		}
+	    text("GAME OVER!", pageWidth/2 - 35, pageHeight/2 -30);
+	    text("SCORE: " + score, pageWidth/2 - 20, pageHeight/2 - 15);
+		text("PRESS SPACE TO", pageWidth/2 - 45, pageHeight/2 + 10);
+		text("RESTART", pageWidth/2 - 20, pageHeight/2 + 25);
 	} else {
-			if(ballMoving) {    
-		        ballX += speedX;
-		        ballY += speedY;
+		if(ballMoving) {    
+	        ballX += speedX;
+	        ballY += speedY;
 
-		        //Draw CPU Paddle
-		        cpuPaddleY = ballY - 25;
-		        rect(cpuPaddleX, cpuPaddleY, paddleWidth, paddleHeight);
+	        //Draw CPU Paddle
+	        cpuPaddleY = ballY - 25;
+	        rect(cpuPaddleX, cpuPaddleY, paddleWidth, paddleHeight);
 
-		        //Draw Center Circle and write instructions within
-		        fill(0, 0, 0);
-		        ellipse(pageWidth/2, pageHeight/2, 150, 150);    
+	        //Draw Center Circle and write instructions within
+	        fill(0, 0, 0);
+	        ellipse(pageWidth/2 + 5, pageHeight/2, 150, 150);    
 
-		        fill(0, 255, 0); 
-		        textFont(fontA, 14); 
-		        text("Score:" + score, pageWidth/2 - 30, pageHeight/2);
+	        fill(0, 255, 0); 
+	        textFont(fontA, 14); 
+	        text("SCORE:" + score, pageWidth/2 - 20, pageHeight/2);
 
-				//Draw Ball 
-		        ellipse(ballX, ballY, 20, 20);
-	
-			} else {
-				fill(0, 255, 0);  
-			    text("Press any button", pageWidth/2 - 60, pageHeight/2);
-			    text("to start", pageWidth/2 - 30, pageHeight/2 + 15);
-			}
+			//Draw Ball 
+	        ellipse(ballX, ballY, 20, 20);
+			
+		} else {
+			fill(0, 255, 0);  
+		    text("PRESS SPACE TO", pageWidth/2 - 50, pageHeight/2);
+		    text("START", pageWidth/2 - 15, pageHeight/2 + 15);
+		}
 	}
 }
 
-void keyPressed() {
-    ballMoving = true;
-	isGameOver = false;
+void keyTyped() {
+	if(int(key) == 32) {
+		if(ballMoving == false) {
+			ballMoving = true;
+		}
+		if(isGameOver == true) {
+			isGameOver = false;
+		}
+	}
 }
