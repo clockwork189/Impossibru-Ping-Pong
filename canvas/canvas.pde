@@ -5,6 +5,10 @@ var ballY = pageHeight/2;
 var speedX = -5;
 var speedY = -5;
 var computerPaddle = pageHeight/2;
+var cpuPaddleY = 0;
+var cpuPaddleX = pageWidth - 40;
+var ballMoving = false;
+
 void setup() {
     size(pageWidth,pageHeight);
 }
@@ -24,13 +28,16 @@ void draw() {
     //Draw Paddle
     rect(20, mouseY, 20, 50); 
      
-    //Draw Center Circle
+    //Draw Center Circle and write instructions within
     fill(0, 0, 0);
     ellipse(pageWidth/2, pageHeight/2, 150, 150);    
-   
-    //Draw Ball 
+    
     fill(0, 255, 0); 
-    ellipse(ballX, ballY, 20, 20);
+    PFont fontA = loadFont("courier");
+    textFont(fontA, 14); 
+    text("Press any button", pageWidth/2 - 60, pageHeight/2);
+    text("to start", pageWidth/2 - 30, pageHeight/2 + 15);
+    
     
     // Control Bounce off walls
     if(ballX == 0) {
@@ -43,18 +50,39 @@ void draw() {
         speedY = -5;
     } 
     
+    // Control Ball Bounce off Paddle
     if(ballY > mouseY && ballY < mouseY + 50 && ballX == 40) {
         speedX = 5;
     }
        
-    if(ballY > mouseY && ballY < mouseY + 50 && ballX == 40) {
-        speedX = 5;
+    // Control Ball Bounce off Enemy Paddle
+    if(ballX == cpuPaddleX) {
+        speedX = -5;
     }
         
-    ballX += speedX;
-    ballY += speedY;
 
-    //Draw CPU Paddle
-    rect(pageWidth - 40, ballY, 20, 50); 
+    if(ballMoving) {    
+        ballX += speedX;
+        ballY += speedY;
+        
+        //Draw Ball 
+        ellipse(ballX, ballY, 20, 20);
+        
+        //Draw CPU Paddle
+        cpuPaddleY = ballY - 25;
+        rect(cpuPaddleX, cpuPaddleY, 20, 50);
+    
+        //Draw Center Circle and write instructions within
+        fill(0, 0, 0);
+        ellipse(pageWidth/2, pageHeight/2, 150, 150);    
+        
+        fill(0, 255, 0); 
+        PFont fontA = loadFont("courier");
+        textFont(fontA, 14); 
+        text("Score:21", pageWidth/2 - 50, pageHeight/2);
+    } 
 }
 
+void keyPressed() {
+    ballMoving = true;
+}
