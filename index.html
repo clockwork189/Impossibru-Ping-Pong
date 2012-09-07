@@ -12,19 +12,22 @@
     <style>
         body {
             background-color: #000;
-			color: #00ff00;
+			color: #ffffff;
 			font-family: Courier New;
         }
 		a {
-			color: #00ff00;
+			color: #ffffff;
 			text-decoration:none;
+		}
+		canvas {
+			outline: none;
 		}
     </style>
 </head>
 <body>
 <h1 style="text-align:center;">Impossibru Pong!</h1>
 	<p style="width:850px; text-align:center; margin: 0 auto 20px auto;">
-		To start the game, press any button on your keyboard. The goal of this game is to ensure that you do not let the ball go out of bounds.
+		To start the game, click anywhere on the arena. Move your mouse up and down to control your paddle. The goal of this game is to ensure that you do not let the ball go out of bounds.
 	</p>
     <div style="width: 100%; text-align:center">
         <canvas style="display:inline;" data-processing-sources="canvas/canvas.pde"  tabindex="1"></canvas>
@@ -32,8 +35,12 @@
 		<!--<a href="leaderboard.html" style="margin-right:20px;">Leaderboard</a> -->
     </div>
 	<script>
-	$("#canvas").attr("contentEditable", "true")
-	$("#canvas")[0].contentEditable = true;
-		</script>
+		$("#canvas")
+		    // Add tab index to ensure the canvas retains focus
+		    .attr("tabindex", "0")
+		    // Mouse down override to prevent default browser controls from appearing
+		    .mousedown(function(){ $(this).focus(); return false; }) 
+		    .keydown(function(){ $(this).focus(); return false; });
+	</script>
 </body>
 </html>

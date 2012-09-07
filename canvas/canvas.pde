@@ -24,8 +24,8 @@ void draw() {
     background(0,0,0);
     
     //Draw stage
-    stroke(0, 255, 0);
-    fill(0, 255, 0); 
+    stroke(255, 255, 255);
+    fill(255, 255, 255); 
     rect(0, 0, pageWidth, 10); 
     rect(0, pageHeight-10, pageWidth, 10); 
     rect(pageWidth/2, 0, 10, pageHeight/3); 
@@ -66,11 +66,10 @@ void draw() {
     }
     
 	if(isGameOver == true) {
-		fill(0, 255, 0); 
+		fill(255, 255, 255); 
 	    text("GAME OVER!", pageWidth/2 - 35, pageHeight/2 -30);
 	    text("SCORE: " + score, pageWidth/2 - 20, pageHeight/2 - 15);
-		text("PRESS SPACE TO", pageWidth/2 - 45, pageHeight/2 + 10);
-		text("RESTART", pageWidth/2 - 20, pageHeight/2 + 25);
+		text("CLICK TO RESTART", pageWidth/2 - 60, pageHeight/2 + 10);
 	} else {
 		if(ballMoving) {    
 	        ballX += speedX;
@@ -78,34 +77,33 @@ void draw() {
 
 	        //Draw CPU Paddle
 	        cpuPaddleY = ballY - 25;
+			fill(255, 255, 255);
 	        rect(cpuPaddleX, cpuPaddleY, paddleWidth, paddleHeight);
 
 	        //Draw Center Circle and write instructions within
 	        fill(0, 0, 0);
 	        ellipse(pageWidth/2 + 5, pageHeight/2, 150, 150);    
 
-	        fill(0, 255, 0); 
-	        textFont(fontA, 14); 
+	        fill(255, 255, 255); 
 	        text("SCORE:" + score, pageWidth/2 - 20, pageHeight/2);
 
 			//Draw Ball 
 	        ellipse(ballX, ballY, 20, 20);
-			
+	
+			text("PLAYER", 150, pageHeight - 20);
+			text("CPU", 650, pageHeight - 20);
 		} else {
-			fill(0, 255, 0);  
-		    text("PRESS SPACE TO", pageWidth/2 - 50, pageHeight/2);
-		    text("START", pageWidth/2 - 15, pageHeight/2 + 15);
+			fill(255, 255, 255);  
+		    text("CLICK TO START", pageWidth/2 - 50, pageHeight/2);
 		}
 	}
 }
 
-void keyTyped() {
-	if(int(key) == 32) {
-		if(ballMoving == false) {
-			ballMoving = true;
-		}
-		if(isGameOver == true) {
-			isGameOver = false;
-		}
+void mouseClicked() {
+    if(ballMoving == false) {
+		ballMoving = true;
+	}
+	if(isGameOver == true) {
+		isGameOver = false;
 	}
 }
