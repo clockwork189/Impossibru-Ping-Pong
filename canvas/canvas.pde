@@ -11,9 +11,13 @@ var ballMoving = false;
 var score = 0;
 var isGameOver = false;
 var promptedName = false;
-
+var paddleWidth = 20;
+var paddleHeight = 50;
+PFont fontA = loadFont("Courier New");
+		    
 void setup() {
     size(pageWidth,pageHeight);
+	textFont(fontA, 14);
 }
 
 void draw() {
@@ -29,7 +33,7 @@ void draw() {
     ellipse(pageWidth/2, pageHeight/2, 170, 170);    
     
     //Draw Paddle
-    rect(20, mouseY, 20, 50); 
+    rect(20, mouseY, paddleWidth, paddleHeight); 
      
     //Draw Center Circle and write instructions within
     fill(0, 0, 0);
@@ -38,6 +42,7 @@ void draw() {
     // Control Bounce off walls
     if(ballX == 0) {
 		isGameOver = true;
+		ballMoving = false;
     } else if(ballX == pageWidth - 20) {
         speedX = -5;
 		
@@ -57,30 +62,9 @@ void draw() {
     if(ballX == cpuPaddleX) {
         speedX = -5;
     }
-        
-	if(ballMoving && !isGameOver) {    
-        ballX += speedX;
-        ballY += speedY;
-
-        //Draw CPU Paddle
-        cpuPaddleY = ballY - 25;
-        rect(cpuPaddleX, cpuPaddleY, 20, 50);
-
-        //Draw Center Circle and write instructions within
-        fill(0, 0, 0);
-        ellipse(pageWidth/2, pageHeight/2, 150, 150);    
-
-        fill(0, 255, 0); 
-        PFont fontA = loadFont("Courier New");
-        textFont(fontA, 14); 
-        text("Score:" + score, pageWidth/2 - 30, pageHeight/2);
-
-		//Draw Ball 
-        ellipse(ballX, ballY, 20, 20);
-    } else if(isGameOver) {
+    
+	if(isGameOver == true) {
 		fill(0, 255, 0); 
-	    PFont fontA = loadFont("Courier New");
-	    textFont(fontA, 14); 
 	    text("Game Over!", pageWidth/2 - 40, pageHeight/2);
 	    text("Score: " + score, pageWidth/2 - 30, pageHeight/2 + 15);
 		if(!promptedName) {
@@ -88,11 +72,30 @@ void draw() {
 			promptedName = true;
 		}
 	} else {
-		fill(0, 255, 0); 
-	    PFont fontA = loadFont("Courier New");
-	    textFont(fontA, 14); 
-	    text("Press any button", pageWidth/2 - 60, pageHeight/2);
-	    text("to start", pageWidth/2 - 30, pageHeight/2 + 15);
+			if(ballMoving) {    
+		        ballX += speedX;
+		        ballY += speedY;
+
+		        //Draw CPU Paddle
+		        cpuPaddleY = ballY - 25;
+		        rect(cpuPaddleX, cpuPaddleY, paddleWidth, paddleHeight);
+
+		        //Draw Center Circle and write instructions within
+		        fill(0, 0, 0);
+		        ellipse(pageWidth/2, pageHeight/2, 150, 150);    
+
+		        fill(0, 255, 0); 
+		        textFont(fontA, 14); 
+		        text("Score:" + score, pageWidth/2 - 30, pageHeight/2);
+
+				//Draw Ball 
+		        ellipse(ballX, ballY, 20, 20);
+	
+			} else {
+				fill(0, 255, 0);  
+			    text("Press any button", pageWidth/2 - 60, pageHeight/2);
+			    text("to start", pageWidth/2 - 30, pageHeight/2 + 15);
+			}
 	}
 }
 
