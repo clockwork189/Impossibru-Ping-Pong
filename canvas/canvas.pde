@@ -13,7 +13,9 @@ var isGameOver = false;
 var promptedName = false;
 var paddleWidth = 20;
 var paddleHeight = 50;
-PFont fontA = loadFont("Courier New");    
+PFont fontA = loadFont("Courier New");   
+var stageColor = "255,255,255";
+ 
 		
 void setup() {
     size(pageWidth,pageHeight);
@@ -24,8 +26,8 @@ void draw() {
     background(0,0,0);
     
     //Draw stage
-    stroke(255, 255, 255);
-    fill(255, 255, 255); 
+    stroke(stageColor);
+    fill(stageColor); 
     rect(0, 0, pageWidth, 10); 
     rect(0, pageHeight-10, pageWidth, 10); 
     rect(pageWidth/2, 0, 10, pageHeight/3); 
@@ -66,25 +68,25 @@ void draw() {
     }
     
 	if(isGameOver == true) {
-		fill(255, 255, 255); 
+		fill(stageColor); 
 	    text("GAME OVER!", pageWidth/2 - 35, pageHeight/2 -30);
 	    text("SCORE: " + score, pageWidth/2 - 20, pageHeight/2 - 15);
 		text("CLICK TO RESTART", pageWidth/2 - 60, pageHeight/2 + 10);
 	} else {
-		if(ballMoving) {    
+		if(ballMoving) {    	
 	        ballX += speedX;
 	        ballY += speedY;
-
+			
 	        //Draw CPU Paddle
 	        cpuPaddleY = ballY - 25;
-			fill(255, 255, 255);
+			fill(stageColor);
 	        rect(cpuPaddleX, cpuPaddleY, paddleWidth, paddleHeight);
 
 	        //Draw Center Circle and write instructions within
 	        fill(0, 0, 0);
 	        ellipse(pageWidth/2 + 5, pageHeight/2, 150, 150);    
 
-	        fill(255, 255, 255); 
+	        fill(stageColor); 
 	        text("SCORE:" + score, pageWidth/2 - 20, pageHeight/2);
 
 			//Draw Ball 
@@ -93,7 +95,7 @@ void draw() {
 			text("PLAYER", 150, pageHeight - 20);
 			text("CPU", 650, pageHeight - 20);
 		} else {
-			fill(255, 255, 255);  
+			fill(stageColor);  
 		    text("CLICK TO START", pageWidth/2 - 50, pageHeight/2);
 		}
 	}
