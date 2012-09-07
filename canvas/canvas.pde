@@ -10,6 +10,7 @@ var cpuPaddleX = pageWidth - 40;
 var ballMoving = false;
 var score = 0;
 var isGameOver = false;
+var promptedName = false;
 
 void setup() {
     size(pageWidth,pageHeight);
@@ -57,7 +58,7 @@ void draw() {
         speedX = -5;
     }
         
-	if(ballMoving && isGameOver == false) {    
+	if(ballMoving && !isGameOver) {    
         ballX += speedX;
         ballY += speedY;
 
@@ -70,7 +71,7 @@ void draw() {
         ellipse(pageWidth/2, pageHeight/2, 150, 150);    
 
         fill(0, 255, 0); 
-        PFont fontA = loadFont("courier");
+        PFont fontA = loadFont("Courier New");
         textFont(fontA, 14); 
         text("Score:" + score, pageWidth/2 - 30, pageHeight/2);
 
@@ -78,13 +79,17 @@ void draw() {
         ellipse(ballX, ballY, 20, 20);
     } else if(isGameOver) {
 		fill(0, 255, 0); 
-	    PFont fontA = loadFont("courier");
+	    PFont fontA = loadFont("Courier New");
 	    textFont(fontA, 14); 
 	    text("Game Over!", pageWidth/2 - 40, pageHeight/2);
 	    text("Score: " + score, pageWidth/2 - 30, pageHeight/2 + 15);
+		if(!promptedName) {
+			var playerName = prompt("Please enter your name","Player X");
+			promptedName = true;
+		}
 	} else {
 		fill(0, 255, 0); 
-	    PFont fontA = loadFont("courier");
+	    PFont fontA = loadFont("Courier New");
 	    textFont(fontA, 14); 
 	    text("Press any button", pageWidth/2 - 60, pageHeight/2);
 	    text("to start", pageWidth/2 - 30, pageHeight/2 + 15);
@@ -93,4 +98,5 @@ void draw() {
 
 void keyPressed() {
     ballMoving = true;
+	isGameOver = false;
 }
