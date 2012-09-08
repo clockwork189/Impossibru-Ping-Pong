@@ -107,6 +107,6 @@ void mouseClicked() {
     }
     if(isGameOver == true) {
 	isGameOver = false;
+        score = 0;
     }
-    score = 0;
 }
