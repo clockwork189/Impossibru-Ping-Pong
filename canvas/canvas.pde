@@ -103,9 +103,10 @@ void draw() {
 
 void mouseClicked() {
     if(ballMoving == false) {
-		ballMoving = true;
-	}
-	if(isGameOver == true) {
-		isGameOver = false;
-	}
+	ballMoving = true;
+    }
+    if(isGameOver == true) {
+	isGameOver = false;
+    }
+    score = 0;
 }
